@@ -16,7 +16,7 @@ function Provider({ children }: { children: React.ReactNode }) {
     if (!user) return;
 
     const result = await createUserMutation({
-      email: user.primaryEmailAddress?.emailAddress,
+      email: user.primaryEmailAddress?.emailAddress??'',
       imageUrl: user.imageUrl,
       name: user.fullName ?? "",
     });
