@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -16,12 +17,30 @@ import JobDescription from "./JobDescription";
 function CreateinterviewDialog() {
   const [formData, setFormData] = useState<any>({});
 
+  const [file,setFile]=useState<File>();
+  const [loading,setLoading]=useState(false);
   const onHandleInputChange = (field: string, value: string) => {
     setFormData((prev: any) => ({
       ...prev,
       [field]: value,
     }));
-  };
+  }
+
+  const onSubmit=async()=>{
+    if(!file) return;
+    setLoading(true);
+    const formData=new FormData();
+    formData.append('file',file);
+    try{
+      const res=await axios.post('api/generate-interview-questions',formData)
+      console.log(res.data);
+    }catch(e){
+      console.log(e);
+    }finally{
+      setLoading(false);
+    }
+
+  }
 
   return (
     <Dialog>
@@ -44,7 +63,7 @@ function CreateinterviewDialog() {
               </TabsList>
 
               <TabsContent value="resume-upload">
-                <ResumeUpload />
+                <ResumeUpload setFiles={(file:File)=>setFile(file)}/>
               </TabsContent>
 
               <TabsContent value="job-description">
@@ -60,7 +79,7 @@ function CreateinterviewDialog() {
             <Button variant="ghost">Cancel</Button>
           </DialogClose>
 
-          <Button>Submit</Button>
+          <Button onClick={onSubmit} disabled={loading || !file}>Submit</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
