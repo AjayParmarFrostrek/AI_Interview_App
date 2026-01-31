@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import { useUser } from '@clerk/nextjs'
 import EmptyState from './EmptyState';
-import CreateinterviewDialog from '../_components/CreateinterviewDialog';
+import CreateInterviewDialog from '../_components/CreateInterviewDialog';
 
 
 function Dashboard() {
@@ -16,7 +16,7 @@ function Dashboard() {
           <h2 className= 'text-lg text-gray-500'> My Dashboard</h2>
           <h2>Welcome, {user?.fullName}</h2>
          </div>
-     <CreateinterviewDialog/>
+     <CreateInterviewDialog/>
      </div>
     {interviewList.length == 0 && 
       <EmptyState />}

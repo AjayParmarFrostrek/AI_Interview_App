@@ -14,10 +14,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ResumeUpload from "./ResumeUpload";
 import JobDescription from "./JobDescription";
 
-function CreateinterviewDialog() {
+function CreateInterviewDialog() {
   const [formData, setFormData] = useState<any>({});
 
-  const [file,setFile]=useState<File>();
+  const [file,setFile]=useState<File | null>();
   const [loading,setLoading]=useState(false);
   const onHandleInputChange = (field: string, value: string) => {
     setFormData((prev: any) => ({
@@ -32,7 +32,7 @@ function CreateinterviewDialog() {
     const formData=new FormData();
     formData.append('file',file);
     try{
-      const res=await axios.post('api/generate-interview-questions',formData)
+      const res = await axios.post('api/generate-interview-questions', formData)
       console.log(res.data);
     }catch(e){
       console.log(e);
@@ -51,6 +51,7 @@ function CreateinterviewDialog() {
 
       {/* Dialog Content */}
       <DialogContent className="min-w-3xl">
+        
         <DialogHeader>
           <DialogTitle>Please submit the following details.</DialogTitle>
 
@@ -81,9 +82,10 @@ function CreateinterviewDialog() {
 
           <Button onClick={onSubmit} disabled={loading || !file}>Submit</Button>
         </DialogFooter>
+      
       </DialogContent>
     </Dialog>
   );
 }
 
-export default CreateinterviewDialog;
+export default CreateInterviewDialog;
